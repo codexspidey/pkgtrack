@@ -2,5 +2,21 @@
 name = "pkgtrack"
 version = "0.1.0"
 edition = "2024"
+description = "Track usage of explicitly installed Arch Linux packages"
+license = "MIT"
 
 [dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+rusqlite = { version = "0.34", features = ["bundled"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+libc = "0.2"
+tempfile = { version = "3", optional = true }
+
+[dev-dependencies]
+tempfile = "3"
+
+[profile.release]
+lto = true
+strip = true

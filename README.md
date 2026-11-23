@@ -1,6 +1,6 @@
 # pkgtrack
 
-A lightweight, zero-overhead package usage tracker for user-installed (`pacman -Qqe`) packages on Arch Linux.
+A lightweight package usage tracker ,i built it so that i can keep track of the packages that im using so that during an update i have a fair idea in terms of what packages are getting updated and do i even use them ?
 
 Whenever you run a command in Bash or open a GUI window in Hyprland, `pkgtrack` counts the invocation and updates its timestamp. Use it to find stale packages and see what you can safely remove.
 

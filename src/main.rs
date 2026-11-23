@@ -1,4 +1,6 @@
+mod collect;
 mod db;
+mod parse;
 mod sync;
 
 fn main() -> anyhow::Result<()> {
@@ -7,9 +9,11 @@ fn main() -> anyhow::Result<()> {
 
     if args.len() > 1 && args[1] == "sync" {
         sync::run(&conn)?;
+    } else if args.len() > 1 && args[1] == "aggregate" {
+        collect::aggregate(&conn)?;
     } else {
         println!("pkgtrack database initialized");
-        println!("Run 'pkgtrack sync' to rebuild package mapping");
+        println!("Available: sync, aggregate");
     }
     Ok(())
 }

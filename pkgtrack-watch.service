@@ -1,0 +1,14 @@
+[Unit]
+Description=pkgtrack Hyprland window watcher
+Documentation=https://github.com/ayush/pkgtrack
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.cargo/bin/pkgtrack watch
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
+

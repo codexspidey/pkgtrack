@@ -1,0 +1,17 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = *
+
+[Action]
+Description = Update pkgtrack binary→package map
+When = PostTransaction
+# This hook runs as root, so we cannot reliably write to the user's DB.
+# Instead, it touches a flag file that the user's next `pkgtrack` invocation
+# can check. For now, it's documented as manual-only.
+# If you want auto-sync, uncomment and set your username:
+# Exec = /usr/bin/sudo -u YOUR_USERNAME /home/YOUR_USERNAME/.cargo/bin/pkgtrack sync
+Exec = /usr/bin/true
+

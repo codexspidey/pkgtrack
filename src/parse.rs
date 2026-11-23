@@ -1,6 +1,6 @@
 /// Command prefixes to strip when extracting the "real" command.
 const SKIP_PREFIXES: &[&str] = &[
-    "sudo", "doas", "env", "time", "nohup", "exec", "command",
+    "sudo", "doas", "env", "time", "nohup", "exec", "command", "builtin",
 ];
 
 /// Extract all command words from a shell command line.

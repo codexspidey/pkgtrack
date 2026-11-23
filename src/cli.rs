@@ -2,7 +2,7 @@ use anyhow::Result;
 use clap::{Parser, Subcommand};
 use std::collections::HashMap;
 
-use crate::{collect, db, sync};
+use crate::{collect, db, hypr, sync};
 
 #[derive(Parser)]
 #[command(name = "pkgtrack", about = "Track usage of explicitly installed Arch packages")]
@@ -21,6 +21,9 @@ enum Commands {
 
     /// Rebuild the binary→package map from pacman
     Sync,
+
+    /// Watch Hyprland for GUI window opens (foreground)
+    Watch,
 
     /// Flush event log into the database
     Aggregate,
@@ -64,6 +67,7 @@ pub fn run() -> Result<()> {
             let conn = db::open()?;
             sync::run(&conn)
         }
+        Commands::Watch => hypr::watch(),
         Commands::Aggregate => {
             let conn = db::open()?;
             collect::aggregate(&conn)

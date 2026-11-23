@@ -56,6 +56,13 @@ enum Commands {
 
     /// List explicit packages with no trackable binary
     Untrackable,
+
+    /// Seed usage counts from ~/.bash_history
+    BootstrapHistory {
+        /// Confirm you want to run this (required)
+        #[arg(long)]
+        yes: bool,
+    },
 }
 
 pub fn run() -> Result<()> {
@@ -90,6 +97,10 @@ pub fn run() -> Result<()> {
         Commands::Untrackable => {
             let conn = db::open()?;
             cmd_untrackable(&conn)
+        }
+        Commands::BootstrapHistory { yes } => {
+            let conn = db::open()?;
+            cmd_bootstrap_history(&conn, yes)
         }
     }
 }
@@ -402,11 +413,15 @@ fn cmd_bootstrap_history(conn: &rusqlite::Connection, yes: bool) -> Result<()> {
         return Ok(());
     }
 
-    let home = std::env::var("HOME").expect("HOME not set");
-    let hist_path = std::path::PathBuf::from(&home).join(".bash_history");
+    let hist_path = std::env::var("HISTFILE")
+        .map(std::path::PathBuf::from)
+        .unwrap_or_else(|_| {
+            let home = std::env::var("HOME").expect("HOME not set");
+            std::path::PathBuf::from(home).join(".bash_history")
+        });
 
     if !hist_path.exists() {
-        anyhow::bail!("~/.bash_history not found");
+        anyhow::bail!("History file not found: {}", hist_path.display());
     }
 
     let contents = std::fs::read_to_string(&hist_path)?;

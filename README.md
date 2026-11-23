@@ -51,7 +51,7 @@ Whenever you run a command in an interactive Bash shell or open a GUI window in 
 Clone and build the release binary:
 
 ```bash
-git clone https://github.com/ayush/pkgtrack.git
+git clone https://github.com/codexspidey/pkgtrack.git
 cd pkgtrack
 cargo build --release
 cp target/release/pkgtrack ~/.local/bin/

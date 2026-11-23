@@ -1,6 +1,6 @@
 [Unit]
 Description=pkgtrack Hyprland window watcher
-Documentation=https://github.com/ayush/pkgtrack
+Documentation=https://github.com/codexspidey/pkgtrack
 After=graphical-session.target
 
 [Service]

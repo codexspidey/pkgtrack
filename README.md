@@ -1,8 +1,10 @@
 # pkgtrack
 
-A lightweight, zero-overhead usage tracker for user-installed (`pacman -Qqe`) packages on Arch Linux with Hyprland and Bash.
+A lightweight, zero-overhead usage tracker for user-installed (`pacman -Qqe`) packages on Arch Linux. Works with any interactive Bash shell, with optional Hyprland GUI window tracking.
 
-Whenever you run a command in an interactive Bash shell or open a GUI window in Hyprland, `pkgtrack` records an event. Aggregating these events gives you an accurate count of how often each explicitly installed package is used and when it was last accessed, helping you identify stale packages and decide for yourself what to clean up.
+Whenever you run a command in an interactive Bash shell or open a GUI window under Hyprland, `pkgtrack` records an event. Aggregating these events gives you an accurate count of how often each explicitly installed package is used and when it was last accessed, helping you identify stale packages and decide for yourself what to clean up.
+
+> **Using a different Window Manager / Desktop Environment?** (e.g., KDE Plasma, GNOME, Sway, i3, bspwm): `pkgtrack` works out-of-the-box for all your terminal commands and any GUI apps launched from the shell! The Hyprland watcher daemon is completely optional.
 
 ---
 
@@ -90,9 +92,11 @@ eval "$(pkgtrack init bash)"
 - Idempotent: sourcing `~/.bashrc` multiple times will not duplicate hooks or log events twice.
 - Strips leading prefixes (`sudo`, `doas`, `env`, `time`, `nohup`, `exec`, `command`, `builtin`) and `VAR=value` assignments. Handles `&&`, `||`, `;`, and `|` command chains.
 
-### 2. Hyprland Watcher (GUI Window Tracking)
+### 2. (Optional) Hyprland Watcher (GUI Window Tracking)
 
-Install and enable the provided systemd user unit (from the cloned repository directory):
+> **Note for Non-Hyprland Users (KDE Plasma, GNOME, Sway, i3, etc.)**: You can skip this step entirely! The Bash hook alone tracks all terminal and shell-launched commands.
+
+If you use **Hyprland** and want to track GUI applications opened through launchers (like rofi, wofi, or fuzzel), install and enable the provided systemd user unit (from the cloned repository directory):
 
 ```bash
 mkdir -p ~/.config/systemd/user

@@ -1,8 +1,15 @@
 mod db;
+mod sync;
 
 fn main() -> anyhow::Result<()> {
+    let args: Vec<String> = std::env::args().collect();
     let conn = db::open()?;
-    let version = db::get_meta_int(&conn, "schema_version").unwrap_or(0);
-    println!("pkgtrack database initialized (schema version {version})");
+
+    if args.len() > 1 && args[1] == "sync" {
+        sync::run(&conn)?;
+    } else {
+        println!("pkgtrack database initialized");
+        println!("Run 'pkgtrack sync' to rebuild package mapping");
+    }
     Ok(())
 }
